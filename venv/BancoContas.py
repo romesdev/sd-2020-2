@@ -1,5 +1,7 @@
 import pickle
 #import _pickle as cPickle
+import sys
+
 
 class Banco:
     def __init__(self, contas):
@@ -43,6 +45,7 @@ contas.append(c1)
 contas.append(c2)
 contas.append(c3)
 contas.append(c4)
+print(contas)
 
 banco = Banco(contas)
 
@@ -52,4 +55,7 @@ contas = banco.carregarContasArquivo("contas.txt")
 print(contas)
 
 for c in contas:
+    print(sys.getsizeof(c))
     print(c.__str__())
+
+

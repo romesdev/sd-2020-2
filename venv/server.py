@@ -1,4 +1,5 @@
 import socket
+import pickle
 def server(host = 'localhost', port=8082):
     data_payload = 2048 #The maximum amount of data to be received at once
     # Create a TCP socket
@@ -18,11 +19,13 @@ def server(host = 'localhost', port=8082):
         data = client.recv(data_payload)
         #print(data)
         if data:
+            data_load = pickle.loads(data)
             print ("Data: %s" %data)
+            print ("Data: %s" %data_load)
             client.send(data)
-            print ("sent %s bytes back to %s" % (data, address))
+            print ("sent %s bytes back to %s" % (data_load, address))
             # end connection
             client.close()
             i+=1
-            if i>=3: break
+            #if i>=3: break
 server()
