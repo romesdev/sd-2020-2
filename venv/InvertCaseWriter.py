@@ -1,9 +1,7 @@
 from client import *
 
 
-read = input("Digite a entrada: ")
-arq = input("Nome arquivo: ")
-obj = InvertCaseWriter("texto.txt")
+
 
 class InvertCaseWriter:
     def __init__(self, destino):
@@ -23,6 +21,8 @@ class InvertCaseWriter:
 
 
 
-
-#obj.__writer__(read)
+read = input("Digite a entrada: ")
+arq = input("Nome arquivo: ")
+obj = InvertCaseWriter(arq)
+obj.__writer__(read)
 
