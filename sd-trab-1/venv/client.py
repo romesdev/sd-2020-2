@@ -2,36 +2,22 @@ import socket
 import pickle
 import sys
 
-def client(host = 'localhost', port=8082, message='', size=0, flag=0):
-    # Create a TCP/IP socket
+def client(host = 'localhost', port=8082, message='Primeira mensagem (padrão)', size=0, flag=0):
+    # criar socket TCP/IP
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    # Connect the socket to the server
+    # conectar o socket com o server
     server_address = (host, port)
     print ("Connecting to %s port %s" % server_address)
     print("Quantidade de OBJs por receber: {}" .format(size))
     sock.connect(server_address)
     recv = sys.getsizeof(message) * 2
-    """
-     if(flag == 1):
-        recv = message._bytes()
-        print(recv)
-        message = pickle.loads(message)
-    """
 
-    # Send data
+
+    # envio de dados
     try:
 
         print ("Sending %s" % message)
-        #sock.sendall(message.encode('utf-8'))
-        # Look for the response
-        #amount_received = 0
-        #amount_expected = len(message)
-        """
-         while amount_received < amount_expected:
-            data = sock.recv(48)
-            amount_received += len(data)
-            print ("Received: %s" % data)
-        """
+
         data_string = pickle.dumps(message)
         sock.send(data_string)
 

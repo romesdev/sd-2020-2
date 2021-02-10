@@ -26,6 +26,6 @@ def server(host = 'localhost', port=8082):
             print ("sent %s bytes back to %s" % (data_load, address))
             # end connection
             client.close()
-            i+=1
+            #i+=1
             #if i>=3: break
 server()

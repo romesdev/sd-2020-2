@@ -9,6 +9,7 @@ class InvertCaseReader:
         file = open(self.origem, "r")
         texto = file.readline()
         print(texto)
+        print("Uso do Socket:")
         client(message=texto)
 
 

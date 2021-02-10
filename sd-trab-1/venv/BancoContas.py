@@ -55,7 +55,7 @@ contas = banco.carregarContasArquivo("contas.txt")
 print(contas)
 
 for c in contas:
-    print(sys.getsizeof(c))
+    print("Bytes do Objeto: {}" .format(sys.getsizeof(c)))
     print(c.__str__())
 
 

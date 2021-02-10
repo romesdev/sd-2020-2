@@ -9,14 +9,7 @@ class PessoaOutputStream:
         self.dados = dados
         self.destino = destino
         self.size = len(dados)
-    """
-        def _bytes(self):
-        bytes = 0
-        for i in self.dados:
-            bytes += sys.getsizeof(i)
-        return bytes
-    
-    """
+
 
 
     def __str__(self):
@@ -38,15 +31,18 @@ class PessoaOutputStream:
             qtd = qtd - 1
 
 
-p1 = Pessoa("Joao Joao", "67308573922", 32)
+p1 = Pessoa("Joao Joao", "67308573922", 40)
+p2 = Pessoa("Maria Maria", "4473402112", 28)
+
 
 # print(p1.__str__())
 lista = []
 lista.append(p1)
-lista.append(p1)
+lista.append(p2)
 print(lista.__str__())
 
 pOut = PessoaOutputStream(lista, "pessoas.txt")
+print(pOut.__str__())
 
 pOut._envio_()
 # print(pOut.__str__())
