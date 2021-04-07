@@ -9,42 +9,42 @@ private static Servidor servidor = null;
 	
 	public static void main(String[] args) {
 		
-		
+		int porta = 1928;
 		
 		try {
-			createServer(Integer.valueOf(args[0]));
-			
+			createServer(porta);
 		} catch (SocketException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}catch (IllegalArgumentException e) {
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (ArrayIndexOutOfBoundsException e) {
-			System.out.println("porta definida: " + Constants.SERVER_PORT);
-			main(new String[] {
-					String.valueOf(Constants.SERVER_PORT)
-				});
-		} catch (IllegalAccessException e) {
-			System.out.println("digite uma porta valida (inteiro)");
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 			
-		} 
+	
 		
-		
-		
+	}
 		
 
-	}
 	
 	private static void createServer(int porta) throws SocketException, NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, InterruptedException {
 		servidor = new Servidor(porta);
-		servidor.listener(500);
+		servidor.run(300);
 	}
 
 

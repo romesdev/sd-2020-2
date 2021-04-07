@@ -22,7 +22,6 @@ public class MensagemRequisicao implements Serializable{
 	private byte args[];
 	private int methodId;
 	private static long next = 0;	
-	private static final long serialVersionUID = 223580670025815215L;
 
 
 	

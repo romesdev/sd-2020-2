@@ -24,7 +24,7 @@ public class Servidor{
 	private InetAddress lastClientIp;
 	private int lastClientPort;
 	private DatagramSocket socket;// controla o socket nessa implementação
-	
+	public int BufferSize = 1024;
 	
 	public Servidor(int serverPort) throws SocketException {
 		System.out.println("Servidor iniciado na porta " + serverPort);
@@ -32,12 +32,64 @@ public class Servidor{
 				
 	}
 	
+	
+	
+	//execução do servidor
+		public void run(long delay) throws InterruptedException, NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+			System.out.println("Executando: ");
+			while(true) {
+				Thread.sleep(delay);
+				
+				byte[] requisicao = getRequisicao();
+				if(requisicao == null)
+					continue;
+				
+				MensagemRequisicao mensagem = MensagemRequisicao.deBytes(requisicao);
+				
+				
+				System.out.println("Mensagem recebida de " + lastClientIp.toString());
+						
+				if(mensagem.getRemoteObjectRef().getmInterface().equals(Pacote.class)) {
+					
+					
+					
+					MensagemRequisicao resposta = new MensagemRequisicao(mensagem.getMethodId(), mensagem.getArgs());
+					
+					for(java.lang.reflect.Method m : mensagem.getRemoteObjectRef().getmInterface().getDeclaredMethods()) {
+						if(m.hashCode() == mensagem.getMethodId() ) {
+							System.out.print("método invocado: "+m.getName() + " | id=" + m.hashCode());
+							Object[] args = mensagem.getObjectsArgs();
+							System.out.println("\nação do método: \n");
+							Pacote pacote = new Pacote();
+							m.invoke(pacote, args);
+							
+							
+							
+						}
+						System.out.print("\n");
+								
+						
+					}
+					
+					sendReply(resposta.toBytes());
+					
+				} else {
+					System.out.println(mensagem.getRemoteObjectRef().getmInterface().toString());
+				}	
+				
+				
+			}
+						
+			
+			
+		}
+	
 	//pega as requisições (método previsto pelo autor, George Coulouris)
 	public byte[] getRequisicao() {
-		byte[] buffer = new byte[Constants.BUFFER_SIZE];
+		byte[] buffer = new byte[BufferSize];
 		DatagramPacket request = new DatagramPacket(
 				buffer,
-				Constants.BUFFER_SIZE
+				BufferSize
 			);
 		
 		try {
@@ -62,7 +114,7 @@ public class Servidor{
 				lastClientIp,
 				lastClientPort);
 		try {
-			System.out.println("Mandando resposta para " + lastClientIp + ":" + lastClientPort);
+			System.out.println("Reply " + lastClientIp + ":" + lastClientPort);
 			socket.send(resposta);
 		} catch (IOException e) {
 			System.out.print(e.getMessage());
@@ -72,56 +124,7 @@ public class Servidor{
 	}
 	
 	
-	//esperando comunicação
-	public void listener(long delay) throws InterruptedException, NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		System.out.println("Escutando a cada " + delay + "ms...");
-		while(true) {
-			Thread.sleep(delay);
-			
-			byte[] requisicao = getRequisicao();
-			if(requisicao == null)
-				continue;
-			
-			MensagemRequisicao mensagem = MensagemRequisicao.deBytes(requisicao);
-			
-			
-			System.out.println("Argumento recebido de " + lastClientIp.toString());
-					
-			if(mensagem.getRemoteObjectRef().getmInterface().equals(Pacote.class)) {
-				
-				
-				
-				MensagemRequisicao resposta = new MensagemRequisicao(mensagem.getMethodId(), mensagem.getArgs());
-				
-				for(java.lang.reflect.Method m : mensagem.getRemoteObjectRef().getmInterface().getDeclaredMethods()) {
-					System.out.print(m.getName() + " | id=" + m.hashCode());
-					if(m.hashCode() == mensagem.getMethodId() ) {
-						System.out.println("  id do método invocado" );
-						Object[] args = mensagem.getObjectsArgs();
-						
-						Pacote pacote = new Pacote();
-						m.invoke(pacote, args);
-						
-						
-						
-					}
-					System.out.print("\n");
-							
-					
-				}
-				
-				sendReply(resposta.toBytes());
-				
-			} else {
-				System.out.println(mensagem.getRemoteObjectRef().getmInterface().toString());
-			}	
-			
-			
-		}
-					
-		
-		
-	}
+	
 	
 
 }

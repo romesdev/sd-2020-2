@@ -9,7 +9,6 @@ public class RemoteObjectReference implements Serializable{
 
 
 	private InetAddress ipEndereço;
-	private static final long serialVersionUID = -591446966524923708L;
 
 
 	

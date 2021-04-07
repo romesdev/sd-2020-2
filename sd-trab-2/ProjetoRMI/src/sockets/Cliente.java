@@ -18,12 +18,8 @@ public class Cliente {
 private int serverPort;
 	
 	private Pacote pacote;//mensagem para a transmissao
-	
-	
-	
-	/**
-	 * @param message
-	 */
+	public int BufferSize = 1024;
+
 	public Cliente(Pacote p, int serverPort) {
 		super();
 		this.pacote = p;
@@ -42,7 +38,7 @@ private int serverPort;
 		return null;
 	}
 
-	//realiza a operacao de transmissao de mensagens
+	//realiza a operacao de transmissao de mensagens (método previsto pelo autor, George Coulouris)
 	public void doOperation(String methodName, String[] args) throws IOException, NoSuchMethodException {
 		System.out.println("Requisição\n"+"Começo da operação...");
 		InetAddress ip = null;
@@ -93,7 +89,7 @@ private int serverPort;
 		
 		socket.send(packet);
 		
-		byte[] buffer = new byte[Constants.BUFFER_SIZE];
+		byte[] buffer = new byte[BufferSize];
 		
 		DatagramPacket response = new DatagramPacket(buffer, buffer.length);
 		
